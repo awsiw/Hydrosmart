@@ -93,17 +93,7 @@ class SimulationController extends Controller
             'mode' => $mode
         ]);
 
-        $apiKey = ''; // default fallback
-        $keyFilePath = base_path('geminiapi.txt');
-        if (file_exists($keyFilePath)) {
-            $lines = file($keyFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            foreach ($lines as $line) {
-                if (stripos($line, 'API Key') === false && trim($line) !== '') {
-                    $apiKey = trim($line);
-                    break;
-                }
-            }
-        }
+        $apiKey = env('GEMINI_API_KEY', '');
         $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . $apiKey;
 
         if ($mode === 2) {
